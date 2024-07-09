@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/api/video.dart';
 import 'package:flutter_demo/core/fw_state.dart';
 import 'package:flutter_demo/dao/home_dao.dart';
+import 'package:flutter_demo/model/video_model.dart';
 import 'package:flutter_demo/util/color.dart';
 import 'package:flutter_demo/widget/banner.dart';
 import 'package:flutter_demo/widget/video_card.dart';
@@ -21,6 +23,7 @@ class _HomeTabPageState extends FwState<HomeTabPage> {
   int pageIndex = 1;
   int pageSize = 10;
   List<HomeMo> data = [];
+  List<VideoModel> _videos = videos.toList();
 
   @override
   void initState() {
@@ -66,7 +69,7 @@ class _HomeTabPageState extends FwState<HomeTabPage> {
                   );
                 } else {
                   return VideoCard(
-                    model: data[index],
+                    videoMo: _videos[index],
                   );
                 }
               },

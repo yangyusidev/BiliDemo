@@ -24,7 +24,7 @@ int getPageIndex(List<MaterialPage> pages, RouteStatus routeStatus) {
 }
 
 ///自定义路由封装，路由状态
-enum RouteStatus { login, registration, home, detail, unknown, target }
+enum RouteStatus { login, registration, home, detail, unknown, target, target2 }
 
 ///获取page对应的RouteStatus
 RouteStatus getStatus(MaterialPage page) {
@@ -78,7 +78,7 @@ class FwNavigator extends _RouteJumpListener {
   }
 
   ///注册路由跳转逻辑
-  void registerRouterJump(RouteJumpListener routeJumpListener) {
+  void registerRouteJump(RouteJumpListener routeJumpListener) {
     this._routeJump = routeJumpListener;
   }
 

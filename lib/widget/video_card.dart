@@ -1,18 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_demo/model/home_model.dart';
+import 'package:flutter_demo/navigator/fw_navigator.dart';
 import 'package:flutter_demo/util/format_util.dart';
 import 'package:flutter_demo/util/view_util.dart';
 
+import '../model/video_model.dart';
+
 ///视频卡片
 class VideoCard extends StatelessWidget {
-  HomeMo? model;
+  final VideoModel videoMo;
 
-  VideoCard({super.key, this.model});
+  VideoCard({super.key, required this.videoMo});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+
+        print(videoMo.url);
+        FwNavigator.getInstance()
+            .onJumpTo(RouteStatus.detail, args: {"video": videoMo});
+
+      },
       child: SizedBox(
         height: 200,
         child: Card(
@@ -33,7 +41,7 @@ class VideoCard extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     return Stack(
       children: [
-        cachedImage(model?.pic ?? "", width: size.width / 2 - 10, height: 120),
+        cachedImage(videoMo.cover, width: size.width / 2 - 10, height: 120),
         Positioned(
           left: 0,
           right: 0,
@@ -49,9 +57,9 @@ class VideoCard extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                _iconText(Icons.ondemand_video, count: model?.aid ?? 0),
-                _iconText(Icons.favorite_border, count: model?.favorites ?? 0),
-                _iconText(null, duration: model?.duration),
+                _iconText(Icons.ondemand_video, videoMo.view),
+                _iconText(Icons.favorite_border, videoMo.favorite),
+                _iconText(null, videoMo.duration),
               ],
             ),
           ),
@@ -69,7 +77,7 @@ class VideoCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            model?.title ?? "",
+            videoMo.title,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
             style: const TextStyle(fontSize: 12, color: Colors.black87),
@@ -80,12 +88,12 @@ class VideoCard extends StatelessWidget {
     ));
   }
 
-  _iconText(IconData? iconData, {int? count, String? duration}) {
+  _iconText(IconData? iconData, int count) {
     String views = "";
     if (iconData != null) {
-      views = count != null ? countFormat(count) : "";
+      views = countFormat(count);
     } else {
-      views = model?.duration ?? "00:00";
+      views = durationTransform(videoMo.duration);
     }
     return Row(
       children: [
@@ -102,6 +110,7 @@ class VideoCard extends StatelessWidget {
   }
 
   _owner() {
+    var owner = videoMo.owner;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -109,13 +118,12 @@ class VideoCard extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(12),
-              child: cachedImage(model?.lastRecommend?.last.face ?? "",
-                  height: 24, width: 24),
+              child: cachedImage(owner.face, height: 24, width: 24),
             ),
             Padding(
               padding: const EdgeInsets.only(left: 8),
               child: Text(
-                model?.lastRecommend?.last.uname ?? "",
+                owner.name,
                 style: const TextStyle(fontSize: 11, color: Colors.black87),
               ),
             )
