@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:flutter_demo/http/request/base_request.dart';
+import 'package:flutter_demo/net/http/request/base_request.dart';
 
 /// 网络请求抽象类
 abstract class FwNetAdapter {

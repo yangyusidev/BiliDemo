@@ -1,5 +1,5 @@
-import 'package:flutter_demo/http/core/adapter/net_adapter.dart';
-import 'package:flutter_demo/http/request/base_request.dart';
+import 'package:flutter_demo/net/http/core/adapter/net_adapter.dart';
+import 'package:flutter_demo/net/http/request/base_request.dart';
 
 class MockAdapter extends FwNetAdapter {
   @override

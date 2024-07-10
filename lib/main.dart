@@ -7,8 +7,8 @@ import 'package:flutter_demo/page/video_detail_page.dart';
 
 import 'dao/user_dao.dart';
 import 'db/fw_cache.dart';
-import 'http/core/fw_error.dart';
-import 'http/core/fw_net.dart';
+import 'net/http/core/fw_error.dart';
+import 'net/http/core/fw_net.dart';
 import 'navigator/bottom_navigator.dart';
 import 'navigator/fw_navigator.dart';
 

@@ -1,11 +1,15 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_overlay/flutter_overlay.dart';
 
 import '../api/video.dart';
 import '../model/video_detail_model.dart';
 import '../model/video_model.dart';
 import '../util/view_util.dart';
 import '../widget/appbar.dart';
+import '../widget/barrage/barrage.dart';
+import '../widget/barrage/barrage_input.dart';
+import '../widget/barrage/barrage_switch.dart';
 import '../widget/expandable_content.dart';
 import '../widget/navigation_bar.dart';
 import '../widget/tab.dart';
@@ -30,6 +34,10 @@ class _VideoDetailPageState extends State<VideoDetailPage>
   VideoDetailMo? videoDetailMo;
   VideoModel? videoModel;
   List<VideoModel> videoList = videos.toList();
+
+  bool _inoutShowing = false;
+
+  var _barrageKey = GlobalKey<BarrageState>();
 
   @override
   void initState() {
@@ -105,13 +113,28 @@ class _VideoDetailPageState extends State<VideoDetailPage>
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             _tabBar(),
-            Padding(
-              padding: EdgeInsets.only(right: 20),
-              child: Icon(
-                Icons.live_tv_rounded,
-                color: Colors.grey,
-              ),
-            )
+            BarrageSwitch(onShowInput: () {
+              setState(() {
+                _inoutShowing = true;
+              });
+              HiOverlay.show(context, child: BarrageInput(
+                onTabClose: () {
+                  setState(() {
+                    _inoutShowing = false;
+                  });
+                },
+              )).then((value) {
+                print('---input:$value');
+
+                _barrageKey.currentState!.send(value!);
+              });
+            }, onBarrageSwitch: (open) {
+              if (open) {
+                _barrageKey.currentState!.play();
+              } else {
+                _barrageKey.currentState!.pause();
+              }
+            })
           ],
         ),
       ),

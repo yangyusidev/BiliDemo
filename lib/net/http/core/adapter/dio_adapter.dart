@@ -1,6 +1,6 @@
-import 'package:flutter_demo/http/core/adapter/net_adapter.dart';
-import 'package:flutter_demo/http/core/fw_error.dart';
-import 'package:flutter_demo/http/request/base_request.dart';
+import 'package:flutter_demo/net/http/core/adapter/net_adapter.dart';
+import 'package:flutter_demo/net/http/core/fw_error.dart';
+import 'package:flutter_demo/net/http/request/base_request.dart';
 import 'package:dio/dio.dart';
 
 class DioAdapter extends FwNetAdapter {
