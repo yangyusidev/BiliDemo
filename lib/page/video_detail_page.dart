@@ -108,7 +108,6 @@ class _VideoDetailPageState extends State<VideoDetailPage>
         alignment: Alignment.centerLeft,
         padding: EdgeInsets.only(left: 20),
         height: 39,
-        color: Colors.white,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

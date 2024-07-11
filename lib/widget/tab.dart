@@ -26,7 +26,6 @@ class FwTab extends StatelessWidget {
     return TabBar(
         controller: controller,
         isScrollable: true,
-        labelColor: primary,
         unselectedLabelColor: unselectedLabelColor,
         labelStyle: TextStyle(fontSize: fontSize),
         indicator: UnderlineIndicator(

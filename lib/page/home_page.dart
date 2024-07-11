@@ -6,9 +6,11 @@ import 'package:flutter_demo/util/color.dart';
 import 'package:flutter_demo/util/view_util.dart';
 import 'package:flutter_demo/widget/loading_container.dart';
 import 'package:flutter_demo/widget/navigation_bar.dart';
+import 'package:provider/provider.dart';
 import 'package:underline_indicator/underline_indicator.dart';
 
 import '../model/home_model.dart';
+import '../theme/theme_provider.dart';
 import 'home_tab_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -19,7 +21,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends FwState<HomePage>
-    with AutomaticKeepAliveClientMixin, TickerProviderStateMixin {
+    with
+        AutomaticKeepAliveClientMixin,
+        TickerProviderStateMixin,
+        WidgetsBindingObserver {
   var listener;
   List<HomeMo>? data = [];
 
@@ -41,6 +46,34 @@ class _HomePageState extends FwState<HomePage>
     });
 
     loadData();
+  }
+
+  ///监听应用生命周期变化
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    print(':didChangeAppLifecycleState:$state');
+    switch (state) {
+      case AppLifecycleState.inactive: // 处于这种状态的应用程序应该假设它们可能在任何时候暂停。
+        break;
+      case AppLifecycleState.resumed: //从后台切换前台，界面可见
+        //fix Android压后台首页状态栏字体颜色变白，详情页状态栏字体变黑问题
+        changeStatusBar();
+        break;
+      case AppLifecycleState.paused: // 界面不可见，后台
+        break;
+      case AppLifecycleState.detached: // APP结束时调用
+        break;
+      case AppLifecycleState.hidden:
+        break;
+    }
+  }
+
+  /// 监听系统变化
+  @override
+  void didChangePlatformBrightness() {
+    context.read<ThemeProvider>().darModeChange();
+    super.didChangePlatformBrightness();
   }
 
   @override
@@ -89,7 +122,6 @@ class _HomePageState extends FwState<HomePage>
     return TabBar(
         controller: _controller,
         isScrollable: true,
-        labelColor: Colors.black,
         indicator: const UnderlineIndicator(
             strokeCap: StrokeCap.round,
             borderSide: BorderSide(color: primary, width: 3),
