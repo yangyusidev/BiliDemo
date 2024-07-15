@@ -24,7 +24,16 @@ int getPageIndex(List<MaterialPage> pages, RouteStatus routeStatus) {
 }
 
 ///自定义路由封装，路由状态
-enum RouteStatus { login, registration, home, detail, unknown, target, target2 }
+enum RouteStatus {
+  login,
+  registration,
+  home,
+  detail,
+  unknown,
+  target,
+  target2,
+  darkMode
+}
 
 ///获取page对应的RouteStatus
 RouteStatus getStatus(MaterialPage page) {

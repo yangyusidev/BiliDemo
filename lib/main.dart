@@ -7,14 +7,25 @@ import 'package:flutter_demo/page/video_detail_page.dart';
 
 import 'dao/user_dao.dart';
 import 'db/fw_cache.dart';
+import 'exception/Defend.dart';
 import 'net/http/core/fw_error.dart';
 import 'net/http/core/fw_net.dart';
 import 'navigator/bottom_navigator.dart';
 import 'navigator/fw_navigator.dart';
 
 void main() {
-  runApp(MyApp());
+  Defend().run(MyApp());
+
+  // runApp(MyApp());
+
+  // /// 框架内部体系，try-cache中出现异常后上报异常信息的处理策略
+  // /// 会主动调用FlutterError.onError
+  // FlutterError.onError = (FlutterErrorDetails details) {
+  //   reportError(details);
+  // };
 }
+
+void reportError(FlutterErrorDetails details) {}
 
 class MyApp extends StatelessWidget {
   MyApp();
